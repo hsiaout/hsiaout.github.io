@@ -11810,7 +11810,6 @@ body {
   height: 100%;
   font-size: 100%;
   font-family: "microsoft jhenghei repaire", "microsoft jhenghei" !important;
-  overscroll-behavior-y: none;
 }
 
 /* 修正粗體 */
