@@ -11,7 +11,6 @@
 	<link rel="stylesheet" href="page_dashboard_dark/assets/style.css" />
 	<style>
 		html, body{
-
 			margin: 0;
 			padding: 0;
 			width: 100%;
@@ -20,19 +19,47 @@
 		#nav{
 			background-color: black;
 			height: 100px;
+			display: flex;
+			align-items: center;
+			justify-content: end;
 		}
 		#frame{
 			display: flex;
 			width: 100%;
 			height: calc(100% - 100px);
 		}
+		.grid-2 {
+			grid-template-columns: repeat(2, 1fr); /* 每列 2 等分 */
+		}
+
+		.grid-3 {
+			grid-template-columns: repeat(3, 1fr); /* 每列 3 等分 */
+		}
+
+		.grid-4 {
+			grid-template-columns: repeat(2, 1fr); /* 每列 2 等分，兩列合計 4 區塊 */
+		}
+
+		.grid-6 {
+			grid-template-columns: repeat(3, 1fr); /* 每列 3 等分，兩列合計 6 區塊 */
+		}
+
+		.grid-8 {
+			grid-template-columns: repeat(4, 1fr); /* 每列 4 等分，兩列合計 8 區塊 */
+		}
 	</style>
 </head>
 <body>
-	<div id="nav"></div>
+	<div id="nav">
+		<button type="button" class="btn btn-primary mr-1">2</button>
+		<button type="button" class="btn btn-primary mr-1">3</button>
+		<button type="button" class="btn btn-primary mr-1">4</button>
+		<button type="button" class="btn btn-primary mr-1">6</button>
+		<button type="button" class="btn btn-primary mr-1">8</button>
+	</div>
 	<div id="frame">
-		<object data="https://hsiaout.github.io/page_dashboard_dark/index.html" width="50%" height="100%"></object>
-		<object data="https://hsiaout.github.io/page_dashboard_realtime/index.html" width="50%" height="100%"></object>
+		<object data="page_dashboard_dark/index.html" width="60%" height="100%"></object>
+		<object data="page_dashboard_realtime/index.html" width="40%" height="100%"></object>
 	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>

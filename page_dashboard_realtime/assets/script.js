@@ -139,7 +139,7 @@ var optionsColumn = {
   },
   series: [
     {
-      name: "Load Average",
+      name: "統計資料",
       data: generateMinuteWiseTimeSeries(
         new Date("12/12/2016 00:20:00").getTime(),
         12,
@@ -151,7 +151,7 @@ var optionsColumn = {
     },
   ],
   title: {
-    text: "Load Average",
+    text: "統計資料",
     align: "left",
     style: {
       fontSize: "12px",
@@ -271,7 +271,7 @@ var optionsLine = {
   },
   series: [
     {
-      name: "Running",
+      name: "資料一",
       data: generateMinuteWiseTimeSeries(
         new Date("12/12/2016 00:20:00").getTime(),
         12,
@@ -282,7 +282,7 @@ var optionsLine = {
       ),
     },
     {
-      name: "Waiting",
+      name: "資料二",
       data: generateMinuteWiseTimeSeries(
         new Date("12/12/2016 00:20:00").getTime(),
         12,
@@ -294,11 +294,11 @@ var optionsLine = {
     },
   ],
   xaxis: {
-    type: "datetime",
+    type: "時間",
     range: 2700000,
   },
   title: {
-    text: "Processes",
+    text: "統計資料",
     align: "left",
     style: {
       fontSize: "12px",
@@ -358,7 +358,7 @@ var optionsCircle = {
     },
   },
   series: [71, 63],
-  labels: ["Device 1", "Device 2"],
+  labels: ["資料一", "資料二"],
   legend: {
     show: true,
     position: "left",
@@ -411,7 +411,7 @@ var optionsProgress1 = {
   },
   series: [
     {
-      name: "Process 1",
+      name: "資料一",
       data: [44],
     },
   ],
@@ -419,7 +419,7 @@ var optionsProgress1 = {
     floating: true,
     offsetX: -10,
     offsetY: 5,
-    text: "Process 1",
+    text: "資料一",
   },
   subtitle: {
     floating: true,
@@ -434,7 +434,7 @@ var optionsProgress1 = {
     enabled: false,
   },
   xaxis: {
-    categories: ["Process 1"],
+    categories: ["資料一"],
   },
   yaxis: {
     max: 100,
@@ -474,7 +474,7 @@ var optionsProgress2 = {
   },
   series: [
     {
-      name: "Process 2",
+      name: "資料二",
       data: [80],
     },
   ],
@@ -482,7 +482,7 @@ var optionsProgress2 = {
     floating: true,
     offsetX: -10,
     offsetY: 5,
-    text: "Process 2",
+    text: "資料二",
   },
   subtitle: {
     floating: true,
@@ -497,7 +497,7 @@ var optionsProgress2 = {
     enabled: false,
   },
   xaxis: {
-    categories: ["Process 2"],
+    categories: ["資料二"],
   },
   yaxis: {
     max: 100,
@@ -541,7 +541,7 @@ var optionsProgress3 = {
   },
   series: [
     {
-      name: "Process 3",
+      name: "資料三",
       data: [74],
     },
   ],
@@ -555,7 +555,7 @@ var optionsProgress3 = {
     floating: true,
     offsetX: -10,
     offsetY: 5,
-    text: "Process 3",
+    text: "資料三",
   },
   subtitle: {
     floating: true,
@@ -570,7 +570,7 @@ var optionsProgress3 = {
     enabled: false,
   },
   xaxis: {
-    categories: ["Process 3"],
+    categories: ["資料三"],
   },
   yaxis: {
     max: 100,

@@ -29,7 +29,8 @@ var spark1 = {
     id: "spark1",
     group: "sparks",
     type: "line",
-    height: 80,
+		// height: 80,
+	height: "100%",
     sparkline: {
       enabled: true,
     },
@@ -79,7 +80,8 @@ var spark2 = {
     id: "spark2",
     group: "sparks",
     type: "line",
-    height: 80,
+    // height: 80,
+    height: "100%",
     sparkline: {
       enabled: true,
     },
@@ -129,7 +131,8 @@ var spark3 = {
     id: "spark3",
     group: "sparks",
     type: "line",
-    height: 80,
+    // height: 80,
+    height: "100%",
     sparkline: {
       enabled: true,
     },
@@ -184,7 +187,8 @@ var spark4 = {
     id: "spark4",
     group: "sparks",
     type: "line",
-    height: 80,
+    // height: 80,
+    height: "100%",
     sparkline: {
       enabled: true,
     },
@@ -241,7 +245,8 @@ new ApexCharts(document.querySelector("#spark4"), spark4).render();
 
 var optionsLine = {
   chart: {
-    height: 328,
+    // height: 328,
+    height: "100%",
     type: "line",
     zoom: {
       enabled: false,
@@ -261,26 +266,26 @@ var optionsLine = {
   //colors: ["#3F51B5", '#2196F3'],
   series: [
     {
-      name: "Music",
+      name: "資料一",
       data: [1, 15, 26, 20, 33, 27],
     },
     {
-      name: "Photos",
+      name: "資料二",
       data: [3, 33, 21, 42, 19, 32],
     },
     {
-      name: "Files",
+      name: "資料三",
       data: [0, 39, 52, 11, 29, 43],
     },
   ],
   title: {
-    text: "Media",
+    text: "線條圖",
     align: "left",
     offsetY: 25,
     offsetX: 20,
   },
   subtitle: {
-    text: "Statistics",
+    text: "統計值",
     offsetY: 55,
     offsetX: 20,
   },
@@ -326,8 +331,9 @@ chartLine.render();
 var optionsCircle4 = {
   chart: {
     type: "radialBar",
-    height: 350,
-    width: 380,
+    // height: 350,
+    height: "100%",
+    width: "100%",
   },
   plotOptions: {
     radialBar: {
@@ -349,7 +355,7 @@ var optionsCircle4 = {
     lineCap: "round",
   },
   series: [71, 63, 77],
-  labels: ["June", "May", "April"],
+  labels: ["六月", "五月", "四月"],
   legend: {
     show: true,
     floating: true,
@@ -367,7 +373,8 @@ chartCircle4.render();
 
 var optionsBar = {
   chart: {
-    height: 380,
+    // height: 380,
+    height: "100%",
     type: "bar",
     stacked: true,
   },
@@ -379,28 +386,28 @@ var optionsBar = {
   },
   series: [
     {
-      name: "PRODUCT A",
+      name: "產品A",
       data: [14, 25, 21, 17, 12, 13, 11, 19],
     },
     {
-      name: "PRODUCT B",
+      name: "產品B",
       data: [13, 23, 20, 8, 13, 27, 33, 12],
     },
     {
-      name: "PRODUCT C",
+      name: "產品C",
       data: [11, 17, 15, 15, 21, 14, 15, 13],
     },
   ],
   xaxis: {
     categories: [
-      "2011 Q1",
-      "2011 Q2",
-      "2011 Q3",
-      "2011 Q4",
-      "2012 Q1",
-      "2012 Q2",
-      "2012 Q3",
-      "2012 Q4",
+      "2011 第一季",
+      "2011 第二季",
+      "2011 第三季",
+      "2011 第四季",
+      "2012 第一季",
+      "2012 第二季",
+      "2012 第三季",
+      "2012 第四季",
     ],
   },
   fill: {
@@ -414,7 +421,8 @@ chartBar.render();
 
 var optionsArea = {
   chart: {
-    height: 380,
+    // height: 380,
+    height: "100%",
     type: "area",
     stacked: false,
   },
@@ -423,26 +431,26 @@ var optionsArea = {
   },
   series: [
     {
-      name: "Music",
+      name: "資料一",
       data: [11, 15, 26, 20, 33, 27],
     },
     {
-      name: "Photos",
+      name: "資料二",
       data: [32, 33, 21, 42, 19, 32],
     },
     {
-      name: "Files",
+      name: "資料三",
       data: [20, 39, 52, 11, 29, 43],
     },
   ],
   xaxis: {
     categories: [
-      "2011 Q1",
-      "2011 Q2",
-      "2011 Q3",
-      "2011 Q4",
-      "2012 Q1",
-      "2012 Q2",
+      "2011 第一季",
+      "2011 第二季",
+      "2011 第三季",
+      "2011 第四季",
+      "2012 第一季",
+      "2012 第二季",
     ],
   },
   tooltip: {
