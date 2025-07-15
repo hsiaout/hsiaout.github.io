@@ -240,18 +240,18 @@
             } else if (e.touches.length === 2) {
                 // 雙指縮放
                 const currentTouchDistance = getTouchDistance(e.touches);
-                const { centerX, centerY } = getTouchCenter(e.touches);
+                // const { centerX, centerY } = getTouchCenter(e.touches);
 
                 if (lastTouchDistance) {
                     const distanceDelta = currentTouchDistance - lastTouchDistance;
-                    const previousScale = scale;
+                    // const previousScale = scale;
                     scale += distanceDelta * 0.005; // 調整縮放速度
                     scale = Math.max(0.1, scale); // 確保縮放比例不小於 0.1
 
                     // 計算縮放中心的偏移量
-                    const scaleChange = scale / previousScale;
-                    offsetX = centerX - (centerX - offsetX) * scaleChange;
-                    offsetY = centerY - (centerY - offsetY) * scaleChange;
+                    // const scaleChange = scale / previousScale;
+                    // offsetX = centerX - (centerX - offsetX) * scaleChange;
+                    // offsetY = centerY - (centerY - offsetY) * scaleChange;
                 }
 
                 lastTouchDistance = currentTouchDistance;
