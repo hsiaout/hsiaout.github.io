@@ -10,7 +10,7 @@
             overflow: hidden;
             padding: 0;
             margin: 0;
-            
+            touch-action: manipulation;
         }
         body{
             background-image: url(bg.png);
@@ -28,7 +28,12 @@
             height: 70px;
             background-image: url(header.svg);
             background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
             z-index: 1;
+            @media screen and (max-width: 576px) {
+                height: 55px;
+            }
         }
         .btn-area{
             position: fixed;
@@ -74,7 +79,8 @@
         let startX, startY; // 滑鼠起始位置
         let lastTouchDistance = null; // 用於記錄雙指距離
         let isTouchDragging = false; // 用於記錄是否正在觸控拖曳
-        let targetScale = scale; // 目標縮放比例
+        let targetScale; // 目標縮放比例
+        let initialScale // 預設初始縮放比例
         let animationFrameId = null; // 用於記錄動畫的 ID
         let dpr;
 
@@ -89,6 +95,11 @@
             }else if ( dpr === 3 ){ 
                 scale = 0.2; // 如果是apple手機
             }
+
+            initialScale = scale;
+            targetScale = scale
+            console.log('初始化scale：' + scale)
+            
 
             // 設置 canvas 的 CSS 尺寸
             canvas.style.width = `${window.innerWidth}px`;
@@ -142,6 +153,7 @@
         add.addEventListener('click', () => {
             targetScale += 0.2; // 每次放大 0.2
             cancelAnimationFrame(animationFrameId); // 確保不會有多個動畫同時執行
+            console.log('放大：' + targetScale, '當前scale：' + scale)
             animateScale();
         });
 
@@ -149,17 +161,17 @@
         release.addEventListener('click', () => {
             targetScale = Math.max(0.1, targetScale - 0.2); // 每次縮小 0.2，且不小於 0.1
             cancelAnimationFrame(animationFrameId); // 確保不會有多個動畫同時執行
+            console.log('縮小：' + targetScale, '當前scale：' + scale)
             animateScale();
         });
 
         // 按鈕返回預設大小及位置
         origin.addEventListener('click', () => {
-            targetScale = 0.8;
+            targetScale = initialScale;
             offsetX = 0;
             offsetY = 0;
             cancelAnimationFrame(animationFrameId); // 確保不會有多個動畫同時執行
             animateScale();
-            console.log('ya')
         });
 
         // 滑鼠拖曳功能
@@ -212,6 +224,7 @@
             offsetX = mouseX - canvas.width / 2 + (image.width * scale) / 2 - imgMouseX * scale;
             offsetY = mouseY - canvas.height / 2 + (image.height * scale) / 2 - imgMouseY * scale;
 
+            targetScale = scale;
             drawImageByScale(scale);
         });
 
@@ -220,6 +233,12 @@
             const dx = touches[0].clientX - touches[1].clientX;
             const dy = touches[0].clientY - touches[1].clientY;
             return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        function getTouchCenter(touches) {
+            const centerX = (touches[0].clientX + touches[1].clientX) / 2;
+            const centerY = (touches[0].clientY + touches[1].clientY) / 2;
+            return { centerX, centerY };
         }
 
         canvas.addEventListener('touchstart', (e) => {
@@ -232,6 +251,9 @@
                 // 雙指觸控，啟動縮放
                 isTouchDragging = false;
                 lastTouchDistance = getTouchDistance(e.touches);
+                const { centerX, centerY } = getTouchCenter(e.touches);
+                startX = centerX;
+                startY = centerY;
             }
         });
 
@@ -245,12 +267,22 @@
             } else if (e.touches.length === 2) {
                 // 雙指縮放
                 const currentTouchDistance = getTouchDistance(e.touches);
+                const { centerX, centerY } = getTouchCenter(e.touches);
+
                 if (lastTouchDistance) {
                     const distanceDelta = currentTouchDistance - lastTouchDistance;
+                    const previousScale = scale;
                     scale += distanceDelta * 0.005; // 調整縮放速度
                     scale = Math.max(0.1, scale); // 確保縮放比例不小於 0.1
+
+                    // 計算縮放中心的偏移量
+                    const scaleChange = scale / previousScale;
+                    offsetX = centerX - (centerX - offsetX) * scaleChange;
+                    offsetY = centerY - (centerY - offsetY) * scaleChange;
                 }
+
                 lastTouchDistance = currentTouchDistance;
+                targetScale = scale;
                 drawImageByScale(scale);
             }
         });
