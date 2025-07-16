@@ -6,6 +6,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
+        *{
+            box-sizing: border-box;
+        }
         html, body{
             overflow: hidden;
             padding: 0;
@@ -35,11 +38,38 @@
                 height: 55px;
             }
         }
-        .btn-area{
+        .basic-btn-area{
             position: fixed;
-            bottom: 10px;
+            bottom: 70px;
             left: 50%;
             transform: translate(-50%, 0);
+        }
+        .coor-btn-area{
+            position: fixed;
+            width: 100%;
+            bottom: 10px;
+            white-space: nowrap;
+            overflow: auto;
+            padding: 0 10px;
+            text-align: center;
+            &::-webkit-scrollbar{
+                display: none;
+            }
+        }
+        .site-btn-area{
+            position: fixed;
+            width: 100%;
+            top: 80px;
+            white-space: nowrap;
+            overflow: auto;
+            padding: 0 10px;
+            text-align: center;
+            @media screen and (max-width: 576px) {
+                top: 65px;
+            }
+            &::-webkit-scrollbar{
+                display: none;
+            }
         }
         button{
             font-size: 1.5rem;
@@ -53,14 +83,45 @@
         button:hover{
             background-color: #eee;
         }
+        button.dark{
+            font-size: 1.2rem;
+            background-color: rgba(0,0,0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border: 1px solid rgb(0, 221, 255, 0.5);
+        }
       </style>
 </head>
 <body>
     <div id="header"></div>
-    <div class="btn-area">
+    <div class="basic-btn-area">
         <button id="add" type="button"><i class="fa-solid fa-plus"></i></button>
         <button id="release" type="button"><i class="fa-solid fa-minus"></i></button>
         <button id="origin" type="button"><i class="fa-solid fa-expand"></i></button>
+    </div>
+    <div class="coor-btn-area">
+        <button type="button" class="dark">加壓站01</button>
+        <button type="button" class="dark">加壓站02</button>
+        <button type="button" class="dark">加壓站03</button>
+        <button type="button" class="dark">加壓站04</button>
+        <button type="button" class="dark">加壓站05</button>
+        <button type="button" class="dark">加壓站06</button>
+        <button type="button" class="dark">加壓站07</button>
+        <button type="button" class="dark">加壓站08</button>
+        <button type="button" class="dark">加壓站09</button>
+        <button type="button" class="dark">加壓站10</button>
+    </div>
+    <div class="site-btn-area">
+        <button type="button" class="dark">場站01</button>
+        <button type="button" class="dark">場站02</button>
+        <button type="button" class="dark">場站03</button>
+        <button type="button" class="dark">場站04</button>
+        <button type="button" class="dark">場站05</button>
+        <button type="button" class="dark">場站06</button>
+        <button type="button" class="dark">場站07</button>
+        <button type="button" class="dark">場站08</button>
+        <button type="button" class="dark">場站09</button>
+        <button type="button" class="dark">場站10</button>
     </div>
     <canvas id="canvas"></canvas>
     <script>
