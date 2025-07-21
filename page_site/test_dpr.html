@@ -98,11 +98,13 @@
             position: absolute;
             right: 10px;
             bottom: 10px;
+            display: none;
         }
         #siteModal{
             position: absolute;
             right: 135px;
             bottom: 10px;
+            display: none;
         }
         .modal{
             position: fixed;
@@ -155,7 +157,7 @@
                 bottom: 10px;
             }
             #coorModal, #siteModal{
-                display: none;
+                display: block;
             }
         }
       </style>
@@ -177,27 +179,27 @@
         <button type="button" class="dark" disabled>雙溪場淨水處理流程</button>
     </div>
     <div class="site-btn-area">
+        <button type="button" class="dark" img="content_公館淨">公館淨水場</button>
+        <button type="button" class="dark" img="content_公館加">公館加壓站</button>
         <button type="button" class="dark" disabled>長興淨水場</button>
         <button type="button" class="dark" disabled>松山加壓站</button>
         <button type="button" class="dark" disabled>民生加壓站</button>
-        <button type="button" class="dark" img="content_公館加">公館加壓站</button>
         <button type="button" class="dark" disabled>中和加壓站</button>
         <button type="button" class="dark" disabled>大同加壓站</button>
         <button type="button" class="dark" disabled>安康加壓站</button>
-        <button type="button" class="dark" img="content_公館淨">公館淨水場</button>
     </div>
     <button id="siteModal" type="button" class="dark modal-btn"><i class="fa-solid fa-house-flood-water"></i> 場站流程圖</button>
     <button id="coorModal" type="button" class="dark modal-btn"><i class="fa-solid fa-location-dot"></i> 水足跡</button>
     <div class="modal" data-modal="siteModal">
         <div class="modal-content">
+            <button type="button" class="dark" img="content_公館淨">公館淨水場</button>
+            <button type="button" class="dark" img="content_公館加">公館加壓站</button>
             <button type="button" class="dark" disabled>長興淨水場</button>
             <button type="button" class="dark" disabled>松山加壓站</button>
             <button type="button" class="dark" disabled>民生加壓站</button>
-            <button type="button" class="dark" img="content_公館加">公館加壓站</button>
             <button type="button" class="dark" disabled>中和加壓站</button>
             <button type="button" class="dark" disabled>大同加壓站</button>
             <button type="button" class="dark" disabled>安康加壓站</button>
-            <button type="button" class="dark" img="content_公館淨">公館淨水場</button>
         </div>
     </div>
     <div class="modal" data-modal="coorModal">
