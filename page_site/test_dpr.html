@@ -320,14 +320,6 @@
             // 獲取設備的像素比
             dpr = window.devicePixelRatio || 1;
 
-            // if( dpr < 1 ){
-            //     scale = 0.8; // 如果是普通屏幕，設置初始縮放比例為 0.8
-            // }else if ( dpr === 2 ){
-            //     scale = 0.7; // 如果是高清屏幕，設置初始縮放比例為 0.7
-            // }else if ( dpr === 3 ){ 
-            //     scale = 0.2; // 如果是apple手機
-            // }
-
             if(window.innerWidth < 768){
                 scale = 0.2; // 如果是手機，設置初始縮放比例為 0.5
             }else if(window.innerWidth < 1600){
