@@ -47,10 +47,10 @@
         .coor-btn-area{
             position: fixed;
             width: 100%;
-            bottom: 10px;
+            bottom: 0px;
             white-space: nowrap;
             overflow: auto;
-            padding: 0 10px;
+            padding: 20px;
             text-align: center;
             &::-webkit-scrollbar{
                 display: none;
@@ -59,13 +59,13 @@
         .site-btn-area{
             position: fixed;
             width: 100%;
-            top: 80px;
+            top: 70px;
             white-space: nowrap;
             overflow: auto;
-            padding: 0 10px;
+            padding: 20px;
             text-align: center;
             @media screen and (max-width: 576px) {
-                top: 65px;
+                top: 55px;
             }
             &::-webkit-scrollbar{
                 display: none;
@@ -90,6 +90,71 @@
             padding: 10px 20px;
             border: 1px solid rgb(0, 221, 255, 0.5);
         }
+        button[disabled]{
+            cursor: not-allowed;
+            opacity: 0.3;
+        }
+        #coorModal{
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+        #siteModal{
+            position: absolute;
+            right: 135px;
+            bottom: 10px;
+        }
+        .modal{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: 1s;
+            z-index: 1;
+        }
+        .modal.show{
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-content{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            background-color: black;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 3px rgba(0, 255, 255, 1);
+            z-index: 2;
+            width: 550px;
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            transition: 1s;
+        }
+        [data-modal="coorModal"] button.dark{
+            width: 100%;
+        }
+
+        .show .modal-content{
+            transform: translate(-50%, -50%) scale(1);
+        }
+        @media screen and (min-width: 576px) {
+            .site-btn-area{
+                display: none;
+            }
+            .coor-btn-area{
+                display: none;
+            } 
+            .basic-btn-area{
+                bottom: 10px;
+            }
+        }
       </style>
 </head>
 <body>
@@ -100,30 +165,51 @@
         <button id="origin" type="button"><i class="fa-solid fa-expand"></i></button>
     </div>
     <div class="coor-btn-area">
-        <button type="button" class="dark">加壓站01</button>
-        <button type="button" class="dark">加壓站02</button>
-        <button type="button" class="dark">加壓站03</button>
-        <button type="button" class="dark">加壓站04</button>
-        <button type="button" class="dark">加壓站05</button>
-        <button type="button" class="dark">加壓站06</button>
-        <button type="button" class="dark">加壓站07</button>
-        <button type="button" class="dark">加壓站08</button>
-        <button type="button" class="dark">加壓站09</button>
-        <button type="button" class="dark">加壓站10</button>
+        <button type="button" class="dark" img="content_清一清二">清一清二幹線</button>
+        <button type="button" class="dark" img="content_大同加">大同加壓站(北投、關渡)、雙溪陽明五段加壓</button>
+        <button type="button" class="dark" disabled>大同加壓站(市區、大直線)、民生及松山加壓站</button>
+        <button type="button" class="dark" disabled>中和加壓站、安華及安康加壓站、公館淨及思源加</button>
+        <button type="button" class="dark" disabled>公館加壓站(三重線)、公館淨(市區線)、長興淨水場</button>
+        <button type="button" class="dark" disabled>陽明場淨水處理流程</button>
+        <button type="button" class="dark" disabled>雙溪場淨水處理流程</button>
     </div>
     <div class="site-btn-area">
-        <button type="button" class="dark">場站01</button>
-        <button type="button" class="dark">場站02</button>
-        <button type="button" class="dark">場站03</button>
-        <button type="button" class="dark">場站04</button>
-        <button type="button" class="dark">場站05</button>
-        <button type="button" class="dark">場站06</button>
-        <button type="button" class="dark">場站07</button>
-        <button type="button" class="dark">場站08</button>
-        <button type="button" class="dark">場站09</button>
-        <button type="button" class="dark">場站10</button>
+        <button type="button" class="dark" disabled>長興淨水場</button>
+        <button type="button" class="dark" disabled>松山加壓站</button>
+        <button type="button" class="dark" disabled>民生加壓站</button>
+        <button type="button" class="dark" img="content_公館加">公館加壓站</button>
+        <button type="button" class="dark" disabled>中和加壓站</button>
+        <button type="button" class="dark" disabled>大同加壓站</button>
+        <button type="button" class="dark" disabled>安康加壓站</button>
+        <button type="button" class="dark" img="content_公館淨">公館淨水場</button>
+    </div>
+    <button id="siteModal" type="button" class="dark modal-btn"><i class="fa-solid fa-house-flood-water"></i> 場站流程圖</button>
+    <button id="coorModal" type="button" class="dark modal-btn"><i class="fa-solid fa-location-dot"></i> 水足跡</button>
+    <div class="modal" data-modal="siteModal">
+        <div class="modal-content">
+            <button type="button" class="dark" disabled>長興淨水場</button>
+            <button type="button" class="dark" disabled>松山加壓站</button>
+            <button type="button" class="dark" disabled>民生加壓站</button>
+            <button type="button" class="dark" img="content_公館加">公館加壓站</button>
+            <button type="button" class="dark" disabled>中和加壓站</button>
+            <button type="button" class="dark" disabled>大同加壓站</button>
+            <button type="button" class="dark" disabled>安康加壓站</button>
+            <button type="button" class="dark" img="content_公館淨">公館淨水場</button>
+        </div>
+    </div>
+    <div class="modal" data-modal="coorModal">
+        <div class="modal-content">
+            <button type="button" class="dark" img="content_清一清二">清一清二幹線</button>
+            <button type="button" class="dark" img="content_大同加">大同加壓站(北投、關渡)、雙溪陽明五段加壓</button>
+            <button type="button" class="dark" disabled>大同加壓站(市區、大直線)、民生及松山加壓站</button>
+            <button type="button" class="dark" disabled>中和加壓站、安華及安康加壓站、公館淨及思源加</button>
+            <button type="button" class="dark" disabled>公館加壓站(三重線)、公館淨(市區線)、長興淨水場</button>
+            <button type="button" class="dark" disabled>陽明場淨水處理流程</button>
+            <button type="button" class="dark" disabled>雙溪場淨水處理流程</button>
+        </div>
     </div>
     <canvas id="canvas"></canvas>
+    <script src="../js/jquery-3.6.0.min.js"></script>
     <script>
         const canvas = document.getElementById('canvas');
         const context = canvas.getContext('2d');
@@ -132,7 +218,7 @@
         const origin = document.getElementById('origin');
 
         let image = new Image();
-        image.src = 'content.svg'; // 替換為你的圖片路徑
+        image.src = 'content_大同加.svg'; // 替換為你的圖片路徑
         let scale; // 初始縮放比例
         let offsetX = 0; // 圖片的 x 偏移量
         let offsetY = 0; // 圖片的 y 偏移量
@@ -354,6 +440,35 @@
             }
             if (e.touches.length === 0) {
                 isTouchDragging = false;
+            }
+        });
+    </script>
+    <script>
+        $('.modal-btn').on('click', function(){
+            const modalId = $(this).attr('id');
+            const modal = $(`.modal[data-modal="${modalId}"]`);
+            if (modal.hasClass('show')) {
+                modal.removeClass('show');
+            } else {
+                modal.addClass('show');
+            }
+        });
+        $('.modal').on('click', function(e){
+            if (e.target === this) {
+                $(this).removeClass('show');
+            }
+        });
+        $('button').on('click', function(e){
+            const img = $(this).attr('img');
+            if (img) {
+                image.src = `${img}.svg`; // 替換為你的圖片路徑
+                targetScale = initialScale; // 重置縮放比例
+                offsetX = 0; // 重置偏移量
+                offsetY = 0; // 重置偏移量
+                cancelAnimationFrame(animationFrameId); // 確保不會有多個動畫同時執行
+                animateScale();
+
+                $('.modal').removeClass('show'); // 關閉所有模態框
             }
         });
     </script>
