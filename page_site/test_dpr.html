@@ -40,7 +40,7 @@
         }
         .basic-btn-area{
             position: fixed;
-            bottom: 80px;
+            bottom: 100px;
             left: 50%;
             transform: translate(-50%, 0);
         }
@@ -50,9 +50,10 @@
             bottom: 0px;
             white-space: nowrap;
             overflow: auto;
-            padding: 20px;
+            padding: 15px;
             padding-left: 0;
             text-align: center;
+            background: rgba(0,0,0,0.8);
             &::-webkit-scrollbar{
                 display: none;
             }
@@ -63,9 +64,13 @@
             top: 70px;
             white-space: nowrap;
             overflow: auto;
-            padding: 20px;
+            padding: 15px;
             padding-left: 0;
             text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.8);
             @media screen and (max-width: 576px) {
                 top: 55px;
             }
@@ -77,7 +82,7 @@
             position: sticky;
             left: 0;
             color: white;
-            height: 49px;
+            height: 60px;
             display: inline-flex;
             align-items: center;
             padding: 0 20px;
@@ -86,6 +91,12 @@
             font-size: 1.2rem;
             border-radius: 0 5px 5px 0;
             z-index: 1;
+        }
+        .coor-btn-area .btn-area-title{
+            background-color: black;
+        }
+        .coor-btn-area button.dark{
+            padding: 10px 25px;
         }
         button{
             font-size: 1.5rem;
@@ -106,6 +117,9 @@
             padding: 10px 20px;
             border: 1px solid rgb(0, 221, 255, 0.5);
         }
+        button.dark.is-active{
+            background-color: #00beff42;
+        }
         button[disabled]{
             cursor: not-allowed;
             opacity: 0.3;
@@ -116,9 +130,15 @@
             bottom: 10px;
             display: none;
         }
+        #feetModal{
+            position: absolute;
+            right: 160px;
+            bottom: 10px;
+            display: none;
+        }
         #siteModal{
             position: absolute;
-            right: 135px;
+            right: 294px;
             bottom: 10px;
             display: none;
         }
@@ -155,12 +175,23 @@
             gap: 10px;
             transition: 1s;
         }
-        [data-modal="coorModal"] button.dark{
+        [data-modal="feetModal"] button.dark{
             width: 100%;
         }
 
         .show .modal-content{
             transform: translate(-50%, -50%) scale(1);
+        }
+        select{
+            background-color: black;
+            color: white;
+            padding: 15px 0;
+            border: none;
+            background-color: rgba(0, 20, 60, 1);
+            font-size: 1.2rem;
+        }
+        select:active, select:focus{
+            outline: none;
         }
         @media screen and (min-width: 576px) {
             .site-btn-area{
@@ -172,7 +203,7 @@
             .basic-btn-area{
                 bottom: 10px;
             }
-            #coorModal, #siteModal{
+            #coorModal, #siteModal, #feetModal{
                 display: block;
             }
         }
@@ -186,28 +217,46 @@
         <button id="origin" type="button"><i class="fa-solid fa-expand"></i></button>
     </div>
     <div class="coor-btn-area">
-        <div class="btn-area-title"><i class="fa-solid fa-house-flood-water"></i> 水足跡</div>
-        <button type="button" class="dark" img="content_清一清二">清一清二幹線</button>
-        <button type="button" class="dark" img="content_大同加">大同加壓站(北投、關渡)、雙溪陽明五段加壓</button>
-        <button type="button" class="dark" disabled>大同加壓站(市區、大直線)、民生及松山加壓站</button>
-        <button type="button" class="dark" disabled>中和加壓站、安華及安康加壓站、公館淨及思源加</button>
-        <button type="button" class="dark" disabled>公館加壓站(三重線)、公館淨(市區線)、長興淨水場</button>
-        <button type="button" class="dark" disabled>陽明場淨水處理流程</button>
-        <button type="button" class="dark" disabled>雙溪場淨水處理流程</button>
+        <div class="btn-area-title"><i class="fa-solid fa-location-crosshairs"></i> 快速定位</div>
+        <button type="button" class="dark">01</button>
+        <button type="button" class="dark">02</button>
+        <button type="button" class="dark">03</button>
+        <button type="button" class="dark">04</button>
+        <button type="button" class="dark">05</button>
+        <button type="button" class="dark">06</button>
+        <button type="button" class="dark">07</button>
+        <button type="button" class="dark">08</button>
     </div>
     <div class="site-btn-area">
-        <div class="btn-area-title"><i class="fa-solid fa-location-dot"></i> 場站</div>
-        <button type="button" class="dark" img="content_公館淨">公館淨水場</button>
-        <button type="button" class="dark" img="content_公館加">公館加壓站</button>
-        <button type="button" class="dark" disabled>長興淨水場</button>
-        <button type="button" class="dark" disabled>松山加壓站</button>
-        <button type="button" class="dark" disabled>民生加壓站</button>
-        <button type="button" class="dark" disabled>中和加壓站</button>
-        <button type="button" class="dark" disabled>大同加壓站</button>
-        <button type="button" class="dark" disabled>安康加壓站</button>
+        <div class="btn-area-title">
+            <select name="" id="imgType">
+                <option value="feet"><i class="fa-solid fa-house-flood-water"></i> 水足跡</option>
+                <option value="site"><i class="fa-solid fa-location-dot"></i> 場站</option>
+            </select>
+        </div>
+        <div content="feet">
+            <button type="button" class="dark" img="content_清一清二">清一清二幹線</button>
+            <button type="button" class="dark is-active" img="content_大同加">大同加壓站(北投、關渡)、雙溪陽明五段加壓</button>
+            <button type="button" class="dark" disabled>大同加壓站(市區、大直線)、民生及松山加壓站</button>
+            <button type="button" class="dark" disabled>中和加壓站、安華及安康加壓站、公館淨及思源加</button>
+            <button type="button" class="dark" disabled>公館加壓站(三重線)、公館淨(市區線)、長興淨水場</button>
+            <button type="button" class="dark" disabled>陽明場淨水處理流程</button>
+            <button type="button" class="dark" disabled>雙溪場淨水處理流程</button>
+        </div>
+        <div content="site" style="display: none;">
+            <button type="button" class="dark" img="content_公館淨">公館淨水場</button>
+            <button type="button" class="dark" img="content_公館加">公館加壓站</button>
+            <button type="button" class="dark" disabled>長興淨水場</button>
+            <button type="button" class="dark" disabled>松山加壓站</button>
+            <button type="button" class="dark" disabled>民生加壓站</button>
+            <button type="button" class="dark" disabled>中和加壓站</button>
+            <button type="button" class="dark" disabled>大同加壓站</button>
+            <button type="button" class="dark" disabled>安康加壓站</button>
+        </div>
     </div>
     <button id="siteModal" type="button" class="dark modal-btn"><i class="fa-solid fa-location-dot"></i> 場站流程圖</button>
-    <button id="coorModal" type="button" class="dark modal-btn"><i class="fa-solid fa-house-flood-water"></i> 水足跡</button>
+    <button id="feetModal" type="button" class="dark modal-btn"><i class="fa-solid fa-house-flood-water"></i> 水足跡</button>
+    <button id="coorModal" type="button" class="dark modal-btn"><i class="fa-solid fa-location-crosshairs"></i> 快速定位</button>
     <div class="modal" data-modal="siteModal">
         <div class="modal-content">
             <button type="button" class="dark" img="content_公館淨">公館淨水場</button>
@@ -220,7 +269,7 @@
             <button type="button" class="dark" disabled>安康加壓站</button>
         </div>
     </div>
-    <div class="modal" data-modal="coorModal">
+    <div class="modal" data-modal="feetModal">
         <div class="modal-content">
             <button type="button" class="dark" img="content_清一清二">清一清二幹線</button>
             <button type="button" class="dark" img="content_大同加">大同加壓站(北投、關渡)、雙溪陽明五段加壓</button>
@@ -229,6 +278,18 @@
             <button type="button" class="dark" disabled>公館加壓站(三重線)、公館淨(市區線)、長興淨水場</button>
             <button type="button" class="dark" disabled>陽明場淨水處理流程</button>
             <button type="button" class="dark" disabled>雙溪場淨水處理流程</button>
+        </div>
+    </div>
+    <div class="modal" data-modal="coorModal">
+        <div class="modal-content">
+            <button type="button" class="dark">01</button>
+            <button type="button" class="dark">02</button>
+            <button type="button" class="dark">03</button>
+            <button type="button" class="dark">04</button>
+            <button type="button" class="dark">05</button>
+            <button type="button" class="dark">06</button>
+            <button type="button" class="dark">07</button>
+            <button type="button" class="dark">08</button>
         </div>
     </div>
     <canvas id="canvas"></canvas>
@@ -491,8 +552,17 @@
                 cancelAnimationFrame(animationFrameId); // 確保不會有多個動畫同時執行
                 animateScale();
 
+                $(this).siblings().removeClass('is-active'); // 移除其他按鈕的 is-active 類別
+                $(this).addClass('is-active'); // 為當前按鈕添加 is-active 類別
+
                 $('.modal').removeClass('show'); // 關閉所有模態框
             }
+        });
+        $('#imgType').on('change', function(){
+            const selectedValue = $(this).val();
+            $('.site-btn-area > div[content]').hide(); // 隱藏所有內容
+            $(`.site-btn-area > div[content="${selectedValue}"]`).show(); // 顯示選擇的內容
+            $('.site-btn-area').scrollLeft(0); // 滾動到最左邊
         });
     </script>
 </body>
