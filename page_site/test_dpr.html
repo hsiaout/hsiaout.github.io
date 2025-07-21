@@ -51,6 +51,7 @@
             white-space: nowrap;
             overflow: auto;
             padding: 20px;
+            padding-left: 0;
             text-align: center;
             &::-webkit-scrollbar{
                 display: none;
@@ -63,6 +64,7 @@
             white-space: nowrap;
             overflow: auto;
             padding: 20px;
+            padding-left: 0;
             text-align: center;
             @media screen and (max-width: 576px) {
                 top: 55px;
@@ -70,6 +72,20 @@
             &::-webkit-scrollbar{
                 display: none;
             }
+        }
+        .btn-area-title{
+            position: sticky;
+            left: 0;
+            color: white;
+            height: 49px;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 10px;
+            background-color: rgba(0, 20, 60, 1);
+            font-size: 1.2rem;
+            border-radius: 0 5px 5px 0;
+            z-index: 1;
         }
         button{
             font-size: 1.5rem;
@@ -170,6 +186,7 @@
         <button id="origin" type="button"><i class="fa-solid fa-expand"></i></button>
     </div>
     <div class="coor-btn-area">
+        <div class="btn-area-title"><i class="fa-solid fa-house-flood-water"></i> 水足跡</div>
         <button type="button" class="dark" img="content_清一清二">清一清二幹線</button>
         <button type="button" class="dark" img="content_大同加">大同加壓站(北投、關渡)、雙溪陽明五段加壓</button>
         <button type="button" class="dark" disabled>大同加壓站(市區、大直線)、民生及松山加壓站</button>
@@ -179,6 +196,7 @@
         <button type="button" class="dark" disabled>雙溪場淨水處理流程</button>
     </div>
     <div class="site-btn-area">
+        <div class="btn-area-title"><i class="fa-solid fa-location-dot"></i> 場站</div>
         <button type="button" class="dark" img="content_公館淨">公館淨水場</button>
         <button type="button" class="dark" img="content_公館加">公館加壓站</button>
         <button type="button" class="dark" disabled>長興淨水場</button>
