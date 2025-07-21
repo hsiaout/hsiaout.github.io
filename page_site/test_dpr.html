@@ -34,7 +34,7 @@
             background-repeat: no-repeat;
             background-size: cover;
             z-index: 1;
-            @media screen and (max-width: 576px) {
+            @media screen and (max-width: 768px) {
                 height: 55px;
             }
         }
@@ -71,7 +71,7 @@
             align-items: center;
             gap: 10px;
             background: rgba(0,0,0,0.8);
-            @media screen and (max-width: 576px) {
+            @media screen and (max-width: 768px) {
                 top: 55px;
             }
             &::-webkit-scrollbar{
@@ -193,7 +193,7 @@
         select:active, select:focus{
             outline: none;
         }
-        @media screen and (min-width: 576px) {
+        @media screen and (min-width: 768px) {
             .site-btn-area{
                 display: none;
             }
@@ -328,7 +328,7 @@
             //     scale = 0.2; // 如果是apple手機
             // }
 
-            if(window.innerWidth < 576){
+            if(window.innerWidth < 768){
                 scale = 0.2; // 如果是手機，設置初始縮放比例為 0.5
             }else if(window.innerWidth < 1600){
                 scale = 0.7;
