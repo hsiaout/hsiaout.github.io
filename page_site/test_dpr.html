@@ -259,8 +259,8 @@
     <button id="coorModal" type="button" class="dark modal-btn"><i class="fa-solid fa-location-crosshairs"></i> 快速定位</button>
     <div class="modal" data-modal="siteModal">
         <div class="modal-content">
-            <button type="button" class="dark" img="content_公館淨">公館淨水場</button>
-            <button type="button" class="dark" img="content_公館加">公館加壓站</button>
+            <button type="button" class="dark" disabled>公館淨水場</button>
+            <button type="button" class="dark" disabled>公館加壓站</button>
             <button type="button" class="dark" disabled>長興淨水場</button>
             <button type="button" class="dark" disabled>松山加壓站</button>
             <button type="button" class="dark" disabled>民生加壓站</button>
@@ -293,7 +293,7 @@
         </div>
     </div>
     <canvas id="canvas"></canvas>
-    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
     <script>
         const canvas = document.getElementById('canvas');
         const context = canvas.getContext('2d');
@@ -322,6 +322,8 @@
 
             if(window.innerWidth < 768){
                 scale = 0.2; // 如果是手機，設置初始縮放比例為 0.5
+            }else if(window.innerWidth < 1200){
+                scale = 0.6; // 如果是平板，設置初始縮放比例為 0.5
             }else if(window.innerWidth < 1600){
                 scale = 0.7;
             }else{
