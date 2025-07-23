@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout Plugin Demo - Clean API</title>
+    <link rel="stylesheet" href="test-slot-agent.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+	<style>
+        body,html{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+		#main-layout-container{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+		}
+	</style>
+</head>
+
+<body>
+    <!-- API Demo Controls -->
+    <!-- <div class="demo-controls">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-左側控制組->
+            <div class="space-y-4">
+                <!-選擇佈局 Layout Selection->
+                <div class="flex flex-wrap items-center gap-3">
+                    <label class="font-semibold text-gray-700 min-w-0 flex-shrink-0">選擇布局:</label>
+                    <select id="layout-select" class="px-3 py-2 border rounded flex-1 min-w-48">
+                        <option value="1">1. 單視窗</option>
+                        <option value="2" selected>2. 左右雙視窗</option>
+                        <option value="3">3. 上二下一</option>
+                        <option value="4">4. 上一下二</option>
+                        <option value="5">5. 左一右二</option>
+                        <option value="6">6. 左二右一</option>
+                        <option value="7">7. 四宮格</option>
+                        <option value="8">8. 六視窗</option>
+                        <option value="9">9. 九宮格</option>
+                        <option value="10">10. 上中下三視窗</option>
+                        <option value="11">11. 左中右三視窗</option>
+                    </select>
+                    <button class="btn btn-primary flex-shrink-0" onclick="applyLayout()">應用布局</button>
+                </div>
+                <!-網格設定 Grid Options->
+                <div class="flex flex-wrap items-center gap-3">
+                    <label class="font-semibold text-gray-700 min-w-0 flex-shrink-0">網格設定:</label>
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="h-divisions" value="6" min="2" max="12"
+                            class="w-16 px-2 py-1 border rounded text-center">
+                        <span class="text-sm text-gray-600">水平</span>
+                        <input type="number" id="v-divisions" value="6" min="2" max="12"
+                            class="w-16 px-2 py-1 border rounded text-center">
+                        <span class="text-sm text-gray-600">垂直</span>
+                    </div>
+                    <button class="btn btn-secondary flex-shrink-0" onclick="updateGridSettings()">更新網格</button>
+                </div>
+                <!-調試隔線 Debug Grid Toggle->
+                <div class="flex items-center gap-3">
+                    <label class="font-semibold text-gray-700 min-w-0 flex-shrink-0">調試格線:</label>
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" id="debug-grid-toggle" class="mr-2" onchange="toggleDebugGrid()">
+                        <label for="debug-grid-toggle" class="text-sm text-gray-600 cursor-pointer">顯示格線</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-右側控制組->
+            <div class="space-y-4">
+
+                狀態管理 State Management->
+                <div class="flex flex-wrap items-center gap-3">
+                    <label class="font-semibold text-gray-700 min-w-0 flex-shrink-0">狀態管理:</label>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="btn btn-warning" onclick="saveLayout()">保存布局</button>
+                        <button class="btn btn-secondary" onclick="restoreLayout()">恢復布局</button>
+                        <button class="btn btn-primary" onclick="showLayoutInfo()">顯示信息</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Layout Container and Status -->
+    <div id="main-layout-container"></div>
+
+	<script type="module" src="./dashboard-layout.js"></script>
+</body>
+
+</html>

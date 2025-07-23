@@ -1,0 +1,535 @@
+@charset "UTF-8";
+
+// 變數定義
+$font-family-base: "Inter", sans-serif;
+$color-bg-main: #f0f2f5;
+$color-white: #ffffff;
+$color-gray-100: #f7fafc;
+$color-gray-200: #edf2f7;
+$color-gray-300: #e2e8f0;
+$color-gray-400: #cbd5e0;
+$color-gray-500: #a0aec0;
+$color-gray-600: #718096;
+$color-gray-700: #4a5568;
+$color-gray-800: #2d3748;
+$color-blue-200: #bee3f8;
+$color-blue-600: #2b6cb0;
+$color-blue-700: #3182ce;
+$color-purple-600: #932bb0;
+
+// 動畫時間變數（恢復正常速度）
+$transition-base: 0.2s ease-out; // 恢復原本 0.2s
+$transition-snap: 0.1s ease-out; // 恢復原本 0.1s
+$transition-maximize: 0.3s ease-in-out; // 恢復原本 0.3s
+$transition-hiding: 0.25s ease-out; // 恢復原本 0.25s
+$transition-restoring: 0.25s ease-in; // 恢復原本 0.25s
+$transition-pane: 0.3s ease-in-out; // 恢復原本 0.3s
+$transition-swapping: 0.3s ease-out; // 恢復原本 0.3s
+$transition-wobble: 0.5s infinite ease-in-out; // 恢復原本 0.5s
+$transition-container: 0.3s ease; // 恢復原本 0.3s
+$transition-resize-bar: 0.2s ease-out; // 恢復原本 0.2s
+$transition-sidebar: 0.3s ease-in-out; // 恢復原本 0.3s
+
+body {
+  font-family: $font-family-base;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  background-color: $color-bg-main;
+  overflow: hidden;
+}
+
+.dl-controls {
+  padding: 1rem;
+  background-color: $color-white;
+  border-bottom: 1px solid $color-gray-300;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+
+  &__select {
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    background-color: $color-gray-700;
+    color: white;
+    border: 1px solid $color-gray-700;
+    cursor: pointer;
+    font-size: 0.875rem;
+
+    &:hover {
+      background-color: $color-gray-800;
+    }
+  }
+
+  &__label {
+    margin-left: 0.5rem;
+    margin-right: 0.25rem;
+    font-size: 0.875rem;
+  }
+
+  &__input {
+    width: 60px;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid $color-gray-400;
+    font-size: 0.875rem;
+  }
+}
+
+.dl-layout-wrapper {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.dl-layout {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+
+  &__slot {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 4px;
+    background-color: $color-white;
+    position: relative;
+    min-width: 50px;
+    min-height: 50px;
+    transition: flex-basis $transition-base; // 恢復正常速度
+
+    &--snap-animating {
+      transition: flex-basis $transition-snap !important; // 恢復正常速度
+    }
+
+    &--resizing {
+      transition: none !important;
+    }
+
+    &--maximized {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      z-index: 50 !important;
+      flex-basis: auto !important;
+      margin: 0 !important;
+      transform: scale(1) !important;
+      opacity: 1 !important;
+      transition: top $transition-maximize, left $transition-maximize, width $transition-maximize, height $transition-maximize, opacity $transition-maximize; // 恢復正常速度
+      transition-delay: 0s !important;
+    }
+
+    &--hiding {
+      opacity: 0.3;
+      transform: scale(0.95);
+      pointer-events: none;
+      transition: opacity $transition-hiding, transform $transition-hiding !important; // 恢復正常速度
+      // ⭐ 修復：確保在 hiding 狀態下仍然參與佈局
+      display: flex !important;
+      visibility: visible !important;
+    }
+
+    &--hidden {
+      visibility: hidden !important; // ⭐ 修復：使用 visibility 而非 display
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    &--restoring {
+      display: flex !important;
+      opacity: 1 !important;
+      transform: scale(1) !important;
+      transition: opacity $transition-restoring, transform $transition-restoring !important; // 恢復正常速度
+    }
+
+    &--dragging {
+      opacity: 0.4;
+      cursor: grabbing;
+    }
+
+    &--drag-over {
+      border: 2px dashed $color-blue-700;
+      background-color: rgba(49, 130, 206, 0.1);
+    }
+  }
+
+  &__pane {
+    background-color: $color-gray-300;
+    border-radius: 0.375rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    font-size: 0.875rem;
+    color: $color-gray-700;
+    overflow: auto;
+    position: relative;
+    cursor: grab;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity $transition-pane, transform $transition-pane; // 恢復正常速度
+    min-height: 0;
+
+    &--dragging {
+      opacity: 0.4;
+      cursor: grabbing;
+    }
+
+    &--drag-over {
+      border: 2px dashed $color-blue-600;
+    }
+
+    &--drag-helper {
+      background-color: $color-blue-200;
+    }
+
+    &--wobbling {
+      animation: dl-wobble $transition-wobble; // 恢復正常速度
+    }
+
+    &--swapping {
+      transition: transform $transition-swapping; // 恢復正常速度
+    }
+  }
+
+  &__grid-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  &__grid-line {
+    position: absolute;
+
+    &--horizontal {
+      left: 0;
+      right: 0;
+      height: 1px;
+      border-bottom: 3px dashed rgba($color-purple-600, 0.2);
+      margin-top: -1.5px;
+    }
+
+    &--vertical {
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      border-right: 3px dashed rgba($color-purple-600, 0.2);
+      margin-left: -1.5px;
+    }
+  }
+
+  &__container {
+    display: flex;
+    overflow: hidden;
+    min-width: 50px;
+    min-height: 50px;
+    transition: flex-basis $transition-container; // 恢復正常速度
+
+    &--resizing {
+      transition: none !important;
+    }
+
+    &--maximized-ancestor {
+      /* 標記包含最大化槽位的父容器 */
+    }
+  }
+
+  &--maximized {
+    gap: 0 !important;
+
+    & > .dl-resize-bar,
+    & > .dl-layout__container--maximized-ancestor > .dl-resize-bar {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      display: none !important;
+    }
+
+    & > .dl-layout__container:not(.dl-layout__container--maximized-ancestor) {
+      flex-basis: 0 !important;
+      flex-grow: 0 !important;
+      min-height: 0 !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+    }
+
+    .dl-layout__container--maximized-ancestor {
+      display: flex !important;
+      flex-basis: 100% !important;
+      width: 100% !important;
+      height: 100% !important;
+      flex-grow: 1 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      gap: 0 !important;
+    }
+
+    .dl-resize-bar {
+      display: none !important;
+    }
+  }
+}
+
+.dl-u-no-transition {
+  transition: none !important;
+}
+
+@keyframes dl-wobble {
+  0%, 100% {
+    transform: translateX(0%) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-2px) rotate(-0.5deg);
+  }
+  75% {
+    transform: translateX(2px) rotate(0.5deg);
+  }
+}
+
+.dl-drag-helper {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dl-resize-bar {
+  background-color: $color-gray-500;
+  flex-shrink: 0;
+  transition: opacity $transition-resize-bar; // 恢復正常速度
+  user-select: none;
+  position: relative;
+  visibility: visible; // ⭐ 修復：確保默認可見
+
+  &:hover {
+    background-color: $color-gray-600;
+  }
+
+  &--horizontal {
+    cursor: ns-resize;
+    width: 100%;
+    min-height: 8px;
+  }
+
+  &--vertical {
+    cursor: ew-resize;
+    height: 100%;
+    min-width: 8px;
+  }
+
+  &--active {
+    background-color: $color-gray-700 !important;
+  }
+  
+  // ⭐ 修復：確保在最大化恢復後 resize bars 正確顯示
+  &[style*="visibility: hidden"] {
+    visibility: visible !important;
+  }
+}
+
+/* Card Component */
+.dl-card {
+  background-color: white;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid $color-gray-300;
+    background-color: $color-gray-100;
+  }
+
+  &__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $color-gray-800;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  &__button {
+    padding: 0.125rem 0.375rem;
+    font-size: 0.75rem;
+    border-radius: 0.25rem;
+    background-color: $color-gray-200;
+    color: $color-gray-700;
+    border: 1px solid $color-gray-400;
+
+    &:hover {
+      background-color: $color-gray-300;
+    }
+  }
+
+  &__content {
+    padding: 0.75rem;
+    flex-grow: 1;
+    overflow-y: auto;
+    font-size: 0.875rem;
+  }
+}
+
+/* Thumbnail Sidebar Component */
+.dl-thumbnail-sidebar {
+  position: fixed;
+  top: 50%;
+  right: -170px;
+  width: 150px;
+  transform: translateY(-50%);
+  max-height: 80vh;
+  background-color: rgba(237, 242, 247, 0.95);
+  border: 1px solid $color-gray-400;
+  border-right: none;
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+  padding: 10px;
+  box-sizing: border-box;
+  z-index: 1010;
+  transition: right $transition-sidebar, opacity $transition-sidebar; // 恢復正常速度
+  opacity: 0;
+  pointer-events: none;
+  overflow-y: auto;
+  box-shadow: -3px 0 6px rgba(0, 0, 0, 0.1);
+
+  &__item {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: $color-white;
+    border: 1px solid $color-gray-400;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+
+    &:hover {
+      background-color: $color-bg-main;
+    }
+  }
+
+  &.is-visible {
+    right: 10px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+#show-thumbnails-btn {
+  position: fixed;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%) translateX(100%);
+  z-index: 1005;
+  padding: 0.5rem;
+  background-color: $color-gray-700;
+  color: white;
+  border: none;
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+  cursor: pointer;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity $transition-sidebar, transform $transition-sidebar; // 恢復正常速度
+
+  &.is-visible {
+    transform: translateY(-50%) translateX(0%);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Animation class for smooth snap to grid effect */
+.dl-layout__slot--snap-animating,
+.dl-layout__container--snap-animating {
+  transition: flex-basis $transition-base !important; // 恢復正常速度
+}
+
+/* Debug Grid Overlay - Independent from resize grid */
+.dl-debug-grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.dl-debug-grid-line {
+  position: absolute;
+
+  &--horizontal {
+    left: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 1px solid rgba(59, 130, 246, 0.4);
+    margin-top: -0.5px;
+  }
+
+  &--vertical {
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    border-right: 1px solid rgba(59, 130, 246, 0.4);
+    margin-left: -0.5px;
+  }
+}
+
+.dl-debug-grid-label {
+  position: absolute;
+  background: rgba(59, 130, 246, 0.8);
+  color: white;
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 2px;
+  font-family: monospace;
+  font-weight: bold;
+
+  &--horizontal {
+    left: 4px;
+    transform: translateY(-50%);
+  }
+
+  &--vertical {
+    top: 4px;
+    transform: translateX(-50%);
+  }
+}
+
+/* Show debug grid when enabled */
+.dl-layout__container--debug-grid .dl-debug-grid-overlay {
+  display: block;
+}
+
+.dl-layout__container:not(.dl-layout__container--debug-grid) .dl-debug-grid-overlay {
+  display: none;
+}

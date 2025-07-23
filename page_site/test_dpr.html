@@ -321,13 +321,13 @@
             dpr = window.devicePixelRatio || 1;
 
             if(window.innerWidth < 768){
-                scale = 0.2; // 如果是手機，設置初始縮放比例為 0.5
+                scale = 0.2; // 手機
             }else if(window.innerWidth < 1200){
-                scale = 0.6; // 如果是平板，設置初始縮放比例為 0.5
+                scale = 0.6; // 平板
             }else if(window.innerWidth < 1600){
-                scale = 0.7;
+                scale = 0.7; // 筆電
             }else{
-                scale = 0.8; // 如果是桌面，設置初始縮放比例為 0.8
+                scale = 0.8; // 桌面
             }
 
             initialScale = scale;

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>allView</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        html, body{
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+            touch-action: manipulation;
+        }
+        body{
+            background-image: url(bg.png);
+            background-size: cover;
+            background-position: center;
+        }
+        canvas{
+            width: 100%;
+            height: 100%;
+    
+        }
+        #header{
+            position: fixed;
+            width: 100%;
+            height: 70px;
+            background-image: url(header.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+            /* background-size: cover; */
+            z-index: 1;
+            @media screen and (max-width: 768px) {
+                height: 55px;
+            }
+        }
+        .basic-btn-area{
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+        button{
+            font-size: 1.5rem;
+            border-radius: 5px;
+            border: none;
+            background-color: white;
+            padding: 5px 8px;
+            transition: .3s;
+            cursor: pointer;
+        }
+        button:hover{
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div id="header"></div>
+    <div class="basic-btn-area">
+        <button id="add" type="button"><i class="fa-solid fa-plus"></i></button>
+        <button id="release" type="button"><i class="fa-solid fa-minus"></i></button>
+        <button id="origin" type="button"><i class="fa-solid fa-expand"></i></button>
+    </div>
+    <canvas id="canvas"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const add = document.getElementById('add');
+        const release = document.getElementById('release');
+        const origin = document.getElementById('origin');
+
+        let image = new Image();
+        image.src = 'content_all.svg'; // 替換為你的圖片路徑
+        let scale; // 初始縮放比例
+        let offsetX = 0; // 圖片的 x 偏移量
+        let offsetY = 0; // 圖片的 y 偏移量
+        let isDragging = false; // 是否正在拖曳
+        let startX, startY; // 滑鼠起始位置
+        let lastTouchDistance = null; // 用於記錄雙指距離
+        let isTouchDragging = false; // 用於記錄是否正在觸控拖曳
+        let targetScale; // 目標縮放比例
+        let initialScale // 預設初始縮放比例
+        let animationFrameId = null; // 用於記錄動畫的 ID
+        let dpr;
+
+        // 設置 canvas 填滿頁面
+        function resizeCanvas() {
+            // 獲取設備的像素比
+            dpr = window.devicePixelRatio || 1;
+
+            if(window.innerWidth < 1920){
+                scale = 0.165; // 桌面
+            }else{
+                scale = 0.5
+            }
+
+            initialScale = scale;
+            targetScale = scale
+            console.log('初始化scale：' + scale)
+            
+
+            // 設置 canvas 的 CSS 尺寸
+            canvas.style.width = `${window.innerWidth}px`;
+            canvas.style.height = `${window.innerHeight}px`;
+
+            // 設置 canvas 的實際像素尺寸
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+
+            // 調整繪圖上下文的縮放比例
+            context.scale(dpr, dpr);
+
+            // 繪製圖片
+            drawImageByScale(scale);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        image.onload = () => {
+            resizeCanvas();
+        };
+
+        function drawImageByScale(scale) {
+            const imgWidth = image.width * scale;
+            const imgHeight = image.height * scale;
+            // console.log(imgWidth, imgHeight);
+            // console.log(canvas.width, canvas.height);
+            const centerX = (canvas.width / dpr - imgWidth) / 2 + offsetX;
+            const centerY = (canvas.height / dpr - imgHeight) / 2 + offsetY;
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(image, centerX, centerY, imgWidth, imgHeight);
+        }
+
+        // 平滑縮放動畫
+        function animateScale() {
+            if (Math.abs(targetScale - scale) < 0.01) {
+                scale = targetScale; // 確保最終值精確
+                drawImageByScale(scale);
+                cancelAnimationFrame(animationFrameId);
+                return;
+            }
+
+            // 緩慢接近目標縮放比例
+            scale += (targetScale - scale) * 0.1;
+            drawImageByScale(scale);
+            animationFrameId = requestAnimationFrame(animateScale);
+        }
+
+        // 按鈕放大
+        add.addEventListener('click', () => {
+            targetScale += 0.2; // 每次放大 0.2
+            cancelAnimationFrame(animationFrameId); // 確保不會有多個動畫同時執行
+            console.log('放大：' + targetScale, '當前scale：' + scale)
+            animateScale();
+        });
+
+        // 按鈕縮小
+        release.addEventListener('click', () => {
+            targetScale = Math.max(0.1, targetScale - 0.2); // 每次縮小 0.2，且不小於 0.1
+            cancelAnimationFrame(animationFrameId); // 確保不會有多個動畫同時執行
+            console.log('縮小：' + targetScale, '當前scale：' + scale)
+            animateScale();
+        });
+
+        // 按鈕返回預設大小及位置
+        origin.addEventListener('click', () => {
+            targetScale = initialScale;
+            offsetX = 0;
+            offsetY = 0;
+            cancelAnimationFrame(animationFrameId); // 確保不會有多個動畫同時執行
+            animateScale();
+        });
+
+        // 滑鼠拖曳功能
+        canvas.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                offsetX += dx;
+                offsetY += dy;
+                startX = e.clientX;
+                startY = e.clientY;
+                drawImageByScale(scale);
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            isDragging = false;
+        });
+
+        // 滾輪縮放功能
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const zoomSpeed = 0.1;
+            const mouseX = e.offsetX;
+            const mouseY = e.offsetY;
+
+            // 計算滑鼠位置相對於圖片的座標
+            const imgMouseX = (mouseX - offsetX - canvas.width / 2 + (image.width * scale) / 2) / scale;
+            const imgMouseY = (mouseY - offsetY - canvas.height / 2 + (image.height * scale) / 2) / scale;
+
+            if (e.deltaY < 0) {
+                // 滾輪向上，放大
+                scale += zoomSpeed;
+            } else {
+                // 滾輪向下，縮小
+                scale = Math.max(0.1, scale - zoomSpeed); // 確保縮放比例不小於 0.1
+            }
+
+            // 調整偏移量，確保縮放以滑鼠為中心
+            offsetX = mouseX - canvas.width / 2 + (image.width * scale) / 2 - imgMouseX * scale;
+            offsetY = mouseY - canvas.height / 2 + (image.height * scale) / 2 - imgMouseY * scale;
+
+            targetScale = scale;
+            drawImageByScale(scale);
+        });
+
+        // 觸控事件處理
+        function getTouchDistance(touches) {
+            const dx = touches[0].clientX - touches[1].clientX;
+            const dy = touches[0].clientY - touches[1].clientY;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        function getTouchCenter(touches) {
+            const centerX = (touches[0].clientX + touches[1].clientX) / 2;
+            const centerY = (touches[0].clientY + touches[1].clientY) / 2;
+            return { centerX, centerY };
+        }
+
+        canvas.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                // 單指觸控，啟動拖曳
+                isTouchDragging = true;
+                startX = e.touches[0].clientX - offsetX;
+                startY = e.touches[0].clientY - offsetY;
+            } else if (e.touches.length === 2) {
+                // 雙指觸控，啟動縮放
+                isTouchDragging = false;
+                lastTouchDistance = getTouchDistance(e.touches);
+                const { centerX, centerY } = getTouchCenter(e.touches);
+                startX = centerX;
+                startY = centerY;
+            }
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault(); // 防止預設行為（如滾動頁面）
+            if (isTouchDragging && e.touches.length === 1) {
+                // 單指拖曳
+                offsetX = e.touches[0].clientX - startX;
+                offsetY = e.touches[0].clientY - startY;
+                drawImageByScale(scale);
+            } else if (e.touches.length === 2) {
+                // 雙指縮放
+                const currentTouchDistance = getTouchDistance(e.touches);
+                // const { centerX, centerY } = getTouchCenter(e.touches);
+
+                if (lastTouchDistance) {
+                    const distanceDelta = currentTouchDistance - lastTouchDistance;
+                    // const previousScale = scale;
+                    scale += distanceDelta * 0.005; // 調整縮放速度
+                    scale = Math.max(0.1, scale); // 確保縮放比例不小於 0.1
+
+                    // 計算縮放中心的偏移量
+                    // const scaleChange = scale / previousScale;
+                    // offsetX = centerX - (centerX - offsetX) * scaleChange;
+                    // offsetY = centerY - (centerY - offsetY) * scaleChange;
+                }
+
+                lastTouchDistance = currentTouchDistance;
+                targetScale = scale;
+                drawImageByScale(scale);
+            }
+        });
+
+        canvas.addEventListener('touchend', (e) => {
+            if (e.touches.length < 2) {
+                lastTouchDistance = null;
+            }
+            if (e.touches.length === 0) {
+                isTouchDragging = false;
+            }
+        });
+    </script>
+</body>
+</html>
