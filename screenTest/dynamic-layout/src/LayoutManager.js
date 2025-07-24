@@ -145,10 +145,10 @@ export class LayoutManager {
 
                     // 設置合適的尺寸
                     if (child.classList.contains('dl-resize-bar--vertical')) {
-                        child.style.width = '8px';
+                        child.style.width = '4px';
                         child.style.cursor = 'ew-resize';
                     } else {
-                        child.style.height = '8px';
+                        child.style.height = '4px';
                         child.style.cursor = 'ns-resize';
                     }
 
@@ -1611,7 +1611,7 @@ export class LayoutManager {
         const parentRect = parent.getBoundingClientRect();
         const barRect = bar.getBoundingClientRect();
         const parentSize = isVertical ? parentRect.width : parentRect.height;
-        const barSize = this.options.barSize || 8;
+        const barSize = this.options.barSize || 4;
         const gap = this.options.gap || 0;
         const divisions = isVertical ? this.options.hDivisions : this.options.vDivisions;
         const gridStep = parentSize / divisions;
@@ -1739,7 +1739,7 @@ export class LayoutManager {
         // 計算 gap 和 resize bar 的總大小
         const numberOfGaps = parentEl.children.length - 1;
         const gapSize = this.options.gap;
-        const barSize = 8; // resize bar 的大小
+        const barSize = 4; // resize bar 的大小
 
         // 計算 resize bar 的數量
         const resizeBars = parentEl.querySelectorAll('.dl-resize-bar');
@@ -1810,7 +1810,7 @@ export class LayoutManager {
     // 計算 gap 和 resize bar 的總大小
     const numberOfGaps = parentEl.children.length - 1;
     const gapSize = this.options.gap;
-    const barSize = 8; // resize bar 的大小
+    const barSize = 4; // resize bar 的大小
 
     // ⭐ 修正：只計算直接子元素中的 resize bar
     const numberOfBars = Array.from(parentEl.children).filter((child) =>

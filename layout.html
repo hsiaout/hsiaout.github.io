@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>自定義標題</title>
+	<style>
+		*{
+			box-sizing: border-box;
+		}
+
+		html, body{
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height:100%;
+		}
+
+		.vertical-grid {
+			display: grid;
+			height: 100vh;
+			grid-template-rows: 1fr 1fr;
+			gap: 10px;
+			background: #f9f9f9;
+		}
+
+		.grid-container{
+			width: 100%;
+			height: 100%;
+			display: grid;
+			gap: 1.5rem;
+			overflow: hidden;
+		}
+
+		.grid{ border: 1px solid #ddd;}
+		.grid-2 { grid-template-columns: repeat(2, 1fr); /* 每列 2 等分 */}
+		.grid-2_3-7 { grid-template-columns: 3fr 7fr; /* 每列 2 等分 */}
+		.grid-3 { grid-template-columns: repeat(3, 1fr); /* 每列 3 等分 */}
+		.grid-4 { grid-template-columns: repeat(2, 1fr); /* 每列 2 等分，兩列合計 4 區塊 */}
+		.grid-6 { grid-template-columns: repeat(3, 1fr); /* 每列 3 等分，兩列合計 6 區塊 */}
+		.grid-8 { grid-template-columns: repeat(4, 1fr); /* 每列 4 等分，兩列合計 8 區塊 */}
+
+		.layout-grid{
+			display: grid;
+			height: 100vh;
+			grid-template-rows: 120px 1fr 1fr;
+			gap: 1.5rem;
+			overflow: hidden;
+		}
+	</style>
+</head>
+<body>
+	<div class="grid-container grid-2_3-7">
+		<div class="grid"></div>
+		<div class="grid"></div>
+	</div>
+</body>
+</html>

@@ -18,26 +18,26 @@ document.addEventListener("DOMContentLoaded", () => {
 		applyLayout(9);
 
 		// 等待布局完成後添加內容
-		setTimeout(() => {
-			const paneIds = ['pane1', 'pane2'];
+		// setTimeout(() => {
+		// 	const paneIds = ['pane1', 'pane2'];
 
-			paneIds.forEach(paneId => {
-				const content = document.createElement('div');
-				content.classList.add('dl-card');
-				content.innerHTML = `
-					<div class="dl-card__header" data-no-drag>
-						<h3>Panel ${paneId}</h3>
-						<button class="maximize-btn fa-solid fa-maximize" data-slot-id="${paneId}"></button>
-					</div>
-					<div class="dl-card__content">
-						<p>This is content for ${paneId}</p>
-					</div>
-				`;
+		// 	paneIds.forEach(paneId => {
+		// 		const content = document.createElement('div');
+		// 		content.classList.add('dl-card');
+		// 		content.innerHTML = `
+		// 			<div class="dl-card__header" data-no-drag>
+		// 				<h3>Panel ${paneId}</h3>
+		// 				<button class="maximize-btn fa-solid fa-maximize" data-slot-id="${paneId}"></button>
+		// 			</div>
+		// 			<div class="dl-card__content">
+		// 				<p>This is content for ${paneId}</p>
+		// 			</div>
+		// 		`;
 
-				layoutPlugin.setPaneContent(paneId, content);
-			});
+		// 		layoutPlugin.setPaneContent(paneId, content);
+		// 	});
 
-		}, 100);
+		// }, 100);
 
 		$("#main-layout-container").on('click', '.maximize-btn', function (event) {
         	const paneId = $(event.currentTarget).parents(".dl-layout__slot").attr("id");

@@ -36,7 +36,7 @@ body {
   flex-direction: column;
   height: 100vh;
   margin: 0;
-  background-color: $color-bg-main;
+  background-color: #021845;
   overflow: hidden;
 }
 
@@ -97,7 +97,7 @@ body {
     flex-direction: column;
     overflow: hidden;
     border-radius: 4px;
-    background-color: $color-white;
+    // background-color: $color-white;
     position: relative;
     min-width: 50px;
     min-height: 50px;
@@ -161,7 +161,7 @@ body {
   }
 
   &__pane {
-    background-color: $color-gray-300;
+    background-color: #021845;
     border-radius: 0.375rem;
     display: flex;
     flex-direction: column;
@@ -169,7 +169,7 @@ body {
     justify-content: flex-start;
     font-size: 0.875rem;
     color: $color-gray-700;
-    overflow: auto;
+    overflow: hidden;
     position: relative;
     cursor: grab;
     padding: 0;
@@ -309,7 +309,7 @@ body {
 }
 
 .dl-resize-bar {
-  background-color: $color-gray-500;
+  background-color: #021232;
   flex-shrink: 0;
   transition: opacity $transition-resize-bar; // 恢復正常速度
   user-select: none;
@@ -317,19 +317,19 @@ body {
   visibility: visible; // ⭐ 修復：確保默認可見
 
   &:hover {
-    background-color: $color-gray-600;
+    background-color: #031f57;
   }
 
   &--horizontal {
     cursor: ns-resize;
     width: 100%;
-    min-height: 8px;
+    min-height: 4px;
   }
 
   &--vertical {
     cursor: ew-resize;
     height: 100%;
-    min-width: 8px;
+    min-width: 4px;
   }
 
   &--active {

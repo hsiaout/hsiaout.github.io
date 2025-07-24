@@ -21,6 +21,24 @@
             width: 100%;
             height: 100%;
 		}
+		.shadow {
+			box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
+		}
+		.sparkboxes .box {
+			padding-top: 30px;
+			padding-bottom: 30px;
+			text-shadow: 0 1px 1px 1px #666;
+			box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.08);
+			position: relative;
+		}
+
+
+		.sparkboxes strong {
+			position: relative;
+			z-index: 3;
+			top: -8px;
+			color: #fff;
+		}
 	</style>
 </head>
 
@@ -90,6 +108,9 @@
     <div id="main-layout-container"></div>
 
 	<script type="module" src="./dashboard-layout.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="scripts.js"></script>
 </body>
 
 </html>

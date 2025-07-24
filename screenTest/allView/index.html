@@ -93,11 +93,13 @@
             // 獲取設備的像素比
             dpr = window.devicePixelRatio || 1;
 
-            if(window.innerWidth < 1920){
+            if(window.innerWidth <= 1920){
                 scale = 0.165; // 桌面
-            }else{
-                scale = 0.5
-            }
+            }else if(window.innerWidth <= 5760){
+                scale = 0.5;
+            }else {
+				scale = 1;
+			}
 
             initialScale = scale;
             targetScale = scale
